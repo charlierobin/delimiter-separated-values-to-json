@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+
+  <title>Test and demo page — just trying out some ideas</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.slim.min.js"
+    integrity="sha512-5NqgLBAYtvRsyAzAvEBWhaW+NoB+vARl6QiA02AFMhCWvPpi7RWResDcTGYvQtzsHVCfiUhwvsijP+3ixUk1xw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="com.charlierobin.dsvtojson.js"></script>
+
+</head>
+
+<body>
+
+  <div id="listing"></div>
+
+  <script>
+
+    axios.get("/data.tsv")
+
+      .then(function (response) {
+
+        var result = window.com.charlierobin.dsvtojson.convertTabSeparatedValuesToObject(response.data, {
+          fieldNamesRowIndex: -1,
+          fieldTypesRowIndex: -1,
+          startRow: 2,
+          fieldNames: ["one", "two", "three", "four", "five"],
+          fieldTypes: ["number", "string", "string", "number", "string"]
+        });
+
+        for (item of result) console.log(item);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
+    axios.get("/data.csv")
+
+      .then(function (response) {
+
+        var result = window.com.charlierobin.dsvtojson.convertCommaSeparatedValuesToObject(response.data, {
+          fieldNamesRowIndex: -1,
+          fieldTypesRowIndex: -1,
+          startRow: 2,
+          fieldNames: ["one", "two", "three", "four", "five"],
+          fieldTypes: ["number", "string", "string", "number", "string"]
+        });
+
+        for (item of result) console.log(item);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  </script>
+
+</body>
+
+</html>
